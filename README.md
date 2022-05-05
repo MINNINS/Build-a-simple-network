@@ -78,3 +78,35 @@ print('Number of test pixels: {0}'.format(n_pixels))
 <img src="./image/result01.png">
 
 ----
+### 2.2 数据可视化
+```python
+# 数据可视化
+import pandas as pd
+import torch
+from torchvision.utils import make_grid
+import matplotlib.pyplot as plt
+import numpy as np
+from torchvision.utils import make_grid
+import torch
+import matplotlib.pyplot as plt
+train_df = pd.read_csv('./dataset/mnist_train.csv')
+n_train = len(train_df)
+n_pixels = len(train_df.columns) - 1 #有多少列，就是多少个像素（28*28=784）
+label = train_df.iloc[0:60000,0]
+n_class = len(set(label))#set删除重复项后，就是类别数
+# 读取测试集
+test_df = pd.read_csv('./dataset/mnist_test.csv')
+n_test = len(test_df)
+n_pixels = len(test_df.columns)
+############################
+random_sel = np.random.randint(len(train_df), size=8)#从0-len(train_df),随机取八个
+data = (train_df.iloc[random_sel,1:].values.reshape(-1,1,28,28)/255.)#iloc索引行,随机取八行，然后取数据（第0行是label所以不取）
+grid = make_grid(torch.Tensor(data), nrow=8)#把8个图片拼到一起
+plt.rcParams['figure.figsize'] = (16, 2)
+plt.imshow(grid.numpy().transpose((1,2,0)))#把第0维channel数换到第三维
+plt.axis('off')
+plt.show()
+print(*list(train_df.iloc[random_sel, 0].values), sep = ', ')
+```
+<img src="./image/result02.png">
+<img src="./image/result03.png">
