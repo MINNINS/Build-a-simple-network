@@ -110,3 +110,36 @@ print(*list(train_df.iloc[random_sel, 0].values), sep = ', ')
 ```
 <img src="./image/result02.png">
 <img src="./image/result03.png">
+### 2.3 判别类别是否均衡
+```python
+# 数据可视化
+import pandas as pd
+import torch
+from torchvision.utils import make_grid
+import matplotlib.pyplot as plt
+import numpy as np
+from torchvision.utils import make_grid
+import torch
+import matplotlib.pyplot as plt
+train_df = pd.read_csv('./dataset/mnist_train.csv')
+n_train = len(train_df)
+n_pixels = len(train_df.columns) - 1 #有多少列，就是多少个像素（28*28=784）
+label = train_df.iloc[0:60000,0]
+n_class = len(set(label))#set删除重复项后，就是类别数
+# 读取测试集
+test_df = pd.read_csv('./dataset/mnist_test.csv')
+n_test = len(test_df)
+n_pixels = len(test_df.columns)
+############################
+# 检查类别是否不均衡
+plt.figure(figsize=(8,5))
+plt.bar(label.value_counts().index, label.value_counts())
+plt.xticks(np.arange(n_class))
+plt.xlabel('Class', fontsize=16)
+plt.ylabel('Count', fontsize=16)
+plt.grid('on', axis='y')
+plt.show()
+
+```
+<img src="./image/result04.png">
+
