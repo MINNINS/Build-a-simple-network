@@ -6,6 +6,7 @@ basic learning
 import torch.nn as nn
 from collections import OrderedDict
 import torch
+##################################################################################
 #define a network
 class MyNet(nn.Module):
     def __init__(self):
@@ -27,16 +28,17 @@ class MyNet(nn.Module):
         x=self.maxpool1(x)
         x=self.features(x)
         return x
-
+##################################################################################
 # SGD optimizer
 net=MyNet()
-optimizer=torch.optim.SGD(net.parameters(),  # must
+# define optimizer---for train
+optimizer=torch.optim.SGD(net.parameters(),  # net.parameters() is important
                           lr=0.001,  #Learning rate
                           momentum=0.9
                           )
 #构建一个词典
 state={'net':net.state_dict(),'optimizer':optimizer.state_dict()}
-torch.save(state,'./model/MyNet.pth')
+torch.save(state,'./model/MyNet.pth')                  # save the model
 
 # Test
 print(net)
