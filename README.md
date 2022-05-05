@@ -1,8 +1,7 @@
 # Build-a-simple-network
 basic learning
 
-```
-python
+```python
 
 import torch.nn as nn
 from collections import OrderedDict
