@@ -110,9 +110,10 @@ print(*list(train_df.iloc[random_sel, 0].values), sep = ', ')
 ```
 <img src="./image/result02.png">
 <img src="./image/result03.png">
+
 ### 2.3 判别类别是否均衡
+
 ```python
-# 数据可视化
 import pandas as pd
 import torch
 from torchvision.utils import make_grid
@@ -139,7 +140,6 @@ plt.xlabel('Class', fontsize=16)
 plt.ylabel('Count', fontsize=16)
 plt.grid('on', axis='y')
 plt.show()
-
 ```
 <img src="./image/result04.png">
 
