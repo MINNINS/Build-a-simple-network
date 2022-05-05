@@ -51,8 +51,50 @@ for p in net.parameters():
 
 
 ```
-## 2.MNIST数据集可视化
-### 2.1 数据概况
+## 2.下载MNIST数据集并保存在./model目录下
+```python
+import torch
+import torchvision
+import torch.utils.data as Data
+import scipy.misc
+import os
+import matplotlib.pyplot as plt
+#将MNIST数据集转换为csv格式
+mydataset = torchvision.datasets.MNIST(root='./dataset',
+                                      train=True,
+                                      transform=None,
+                                      target_transform=None,
+                                      download=True)
+def convert(imgf, labelf, outf, n):
+    f = open(imgf, "rb")
+    o = open(outf, "w")
+    l = open(labelf, "rb")
+
+    f.read(16)
+    l.read(8)
+    images = []
+
+    for i in range(n):
+        image = [ord(l.read(1))]
+        for j in range(28 * 28):
+            image.append(ord(f.read(1)))
+        images.append(image)
+
+    for image in images:
+        o.write(",".join(str(pix) for pix in image) + "\n")
+    f.close()
+    o.close()
+    l.close()
+
+convert("./dataset/MNIST/raw/train-images-idx3-ubyte", "./dataset/MNIST/raw/train-labels-idx1-ubyte",
+        "./dataset/mnist_train.csv", 60000)
+convert("./dataset/MNIST/raw/t10k-images-idx3-ubyte", "./dataset/MNIST/raw/t10k-labels-idx1-ubyte",
+        "./dataset/mnist_test.csv", 10000)
+print("Convert Finished!")
+```
+
+## 3.MNIST数据集可视化
+### 3.1 数据概况
 ```python
 # EDA:一般在进行模型训练之前，都要做一个数据集分析的任务
 import pandas as pd
@@ -78,7 +120,7 @@ print('Number of test pixels: {0}'.format(n_pixels))
 <img src="./image/result01.png">
 
 ----
-### 2.2 数据可视化
+### 3.2 数据可视化
 ```python
 # 数据可视化
 import pandas as pd
@@ -111,7 +153,7 @@ print(*list(train_df.iloc[random_sel, 0].values), sep = ', ')
 <img src="./image/result02.png">
 <img src="./image/result03.png">
 
-### 2.3 判别类别是否均衡
+### 3.3 判别类别是否均衡
 
 ```python
 import pandas as pd
