@@ -51,7 +51,7 @@ for p in net.parameters():
 
 
 ```
-## 2.下载MNIST数据集并保存在./model目录下
+## 2.下载MNIST数据集,将训练集和测试集转换为.csv格式，并保存在./model目录下
 ```python
 import torch
 import torchvision
